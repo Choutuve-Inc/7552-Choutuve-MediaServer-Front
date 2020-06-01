@@ -4,8 +4,9 @@ class LogIn extends Component {
     constructor(){
         super();
         this.state = {
-            user : "",
-            pasword : ""
+            mail : "",
+            password : "",
+            token: ""
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -19,9 +20,20 @@ class LogIn extends Component {
         
     }
 
-    handleSubmit(event){
+    async handleSubmit(event){
         event.preventDefault();
-        console.log('sending ..')
+        const requestOptions = {
+            method: 'POST',
+            body: JSON.stringify({ 
+                tipo: "mailPass",
+                headers: {'Content-Type': 'application/json', 'API-Key': 'secret'},
+                email: this.state.user,
+                password: this.state.password
+            })
+        };
+        const response = await fetch('https://serene-shelf-10674.herokuapp.com/login', requestOptions);
+        const data = await response.json();
+        console.log(response)
     }
 
     render(){
@@ -30,14 +42,14 @@ class LogIn extends Component {
                 <form onSubmit={this.handleSubmit}>
                     <div>
                         <label>
-                            User:
-                            <input type="text" name="user" onChange={this.handleChange}/>
+                            Mail:
+                            <input type="text" name="mail" onChange={this.handleChange}/>
                         </label>
                     </div>
                     <div>
                         <label>
                             Pasword:
-                            <input type="text" name="pasword" onChange={this.handleChange}/>
+                            <input type="text" name="password" onChange={this.handleChange}/>
                         </label>
                     </div>
                     <input type="submit" value="Log In" />
