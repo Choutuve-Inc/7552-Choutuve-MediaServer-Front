@@ -24,16 +24,16 @@ class LogIn extends Component {
         event.preventDefault();
         const requestOptions = {
             method: 'POST',
+            headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({ 
                 tipo: "mailPass",
-                headers: {'Content-Type': 'application/json', 'API-Key': 'secret'},
-                email: this.state.user,
+                email: this.state.mail,
                 password: this.state.password
             })
         };
-        const response = await fetch('https://serene-shelf-10674.herokuapp.com/login', requestOptions);
-        const data = await response.json();
-        console.log(response)
+        fetch('https://serene-shelf-10674.herokuapp.com/login', requestOptions)
+            .then(response => response.json())
+            .then(data => this.setState({ token: data }));;
     }
 
     render(){
