@@ -4,9 +4,9 @@ class LogIn extends Component {
     constructor(){
         super();
         this.state = {
-            mail : "",
-            password : "",
-            token: ""
+            mail : '',
+            password : '',
+            tipo: 'mailPass',
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -19,21 +19,27 @@ class LogIn extends Component {
         });
         
     }
+    
 
     async handleSubmit(event){
         event.preventDefault();
+        let req = { 
+            tipo: 'mailPass',
+            email: this.state.mail,
+            password: this.state.password
+        };
+        
         const requestOptions = {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ 
-                tipo: "mailPass",
-                email: this.state.mail,
-                password: this.state.password
-            })
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(req)
         };
-        fetch('https://serene-shelf-10674.herokuapp.com/login', requestOptions)
-            .then(response => response.json())
-            .then(data => this.setState({ token: data }));;
+        const response = await fetch('https://serene-shelf-10674.herokuapp.com/login', requestOptions)
+        const data = await response.json();
+        console.log(data);
     }
 
     render(){
