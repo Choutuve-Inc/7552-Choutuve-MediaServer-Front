@@ -18,11 +18,119 @@ import {
   dashboardNASDAQChart
 } from "variables/charts.jsx";
 
+const API = 'https://choutuve-app-server.herokuapp.com/';
+const DEFAULT_QUERY = 'videos';
+
 class Dashboard extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isLoaded: false,
+      items: [],
+    };
+  }
+
+  componentDidMount() {
+    let headers = new Headers();
+
+    headers.append('Content-Type', 'application/json');
+    headers.append('Accept', 'application/json');
+    // headers.append('Authorization', 'Basic');
+    // headers.append('Origin','http://localhost:3000');
+
+    // fetch(API + DEFAULT_QUERY, {
+    //   mode: 'cors',
+    //   method: 'GET',
+    //   headers: headers
+    // })
+    //   .then(response => response.json())
+    //   .then(json => console.log(json))
+    //   .catch(error => console.log('Authorization failed : ' + error.message));
+
+
+    fetch(API + DEFAULT_QUERY, {
+      mode: 'cors',
+      method: 'GET',
+      headers: headers
+    })
+      .then(res => res.json())
+      .then(
+        (result) => {
+          this.setState({
+            isLoaded: true,
+            items: result
+          });
+          console.log("son estos", result)
+        },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error
+          });
+          console.log("API Error: ", error)
+
+        }
+      )
+  }
+
+
   render() {
+    const { items } = this.state;
+    console.log(items[0])
     return (
+
       <>
         <div className="content">
+
+          <Row>
+
+            {items.map(item =>
+              // <li key={item.objectID}>
+              //   <a href={item.url}>{item.title}</a>
+              // </li>
+              <Col lg="12" md="12" sm="12">
+                <Card className="card-stats">
+                  <CardBody>
+                    <Row>
+                      <Col md="4">
+                        <div className="numbers">
+                          <CardTitle tag="p">{item.title}</CardTitle>
+                          <p className="card-category">Description: {item.description}</p>
+                        </div>
+                      </Col>
+
+                      <Col md="5">
+                        <div className="numbers">
+                          <p className="card-category">User: {item.user}</p>
+                          <p className="card-category">URL: {item.url}</p>
+                          <p className="card-category">Date: {item.date}</p>
+                          <p className="card-category">Id: {item.id}</p>
+                          <p className="card-category">Size: {item.size}</p>
+                        </div>
+                      </Col>
+
+                      <Col md="3">
+                        <div className="icon-big text-center icon-warning">
+                          <i className="nc-icon nc-spaceship text-warning" />
+                        </div>
+                      </Col>
+
+                    </Row>
+                  </CardBody>
+                  <CardFooter>
+                    <hr />
+                    <div className="stats">
+                      <i className="fas fa-trash" /> Delete video
+                  </div>
+                  </CardFooter>
+                </Card>
+              </Col>
+            )}
+
+          </Row>
+
           <Row>
             <Col lg="3" md="6" sm="6">
               <Card className="card-stats">
