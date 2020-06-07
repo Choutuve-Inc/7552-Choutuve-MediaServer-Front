@@ -40,7 +40,10 @@ class LogIn extends Component {
             .then(res => res.json())
             .then((data) => {
                 console.log(data);
-                this.props.history.push('/admin/dashboard')
+                this.props.history.push({
+                    pathname: '/admin/dashboard',
+                    state: {token: data}
+                })
             })
             .catch(err => {
                 console.log(err);
