@@ -21,7 +21,7 @@ class LogIn extends Component {
     }
     
 
-    async handleSubmit(event){
+    handleSubmit(event){
         event.preventDefault();
         let req = { 
             tipo: 'mailPass',
@@ -31,15 +31,17 @@ class LogIn extends Component {
         
         const requestOptions = {
             method: 'POST',
-            mode: 'cors',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(req)
         };
-        const response = await fetch('https://serene-shelf-10674.herokuapp.com/login', requestOptions)
-        const data = await response.json();
-        console.log(data);
+        fetch('https://choutuve-app-server.herokuapp.com/login', requestOptions)
+            .then(res => res.json())
+            .then((data) => console.log(data))
+            .catch(err => {
+                console.log(err);
+            })
     }
 
     render(){
