@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 
 class LogIn extends Component {
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = {
             mail : '',
             password : '',
@@ -38,10 +38,14 @@ class LogIn extends Component {
         };
         fetch('https://choutuve-app-server.herokuapp.com/login', requestOptions)
             .then(res => res.json())
-            .then((data) => console.log(data))
+            .then((data) => {
+                console.log(data);
+                this.props.history.push('/admin/dashboard')
+            })
             .catch(err => {
                 console.log(err);
             })
+        
     }
 
     render(){
