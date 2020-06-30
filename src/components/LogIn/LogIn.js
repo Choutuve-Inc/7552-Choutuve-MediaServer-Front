@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Route, Redirect } from "react-router";
 
 class LogIn extends Component {
     constructor(props){
@@ -40,10 +41,13 @@ class LogIn extends Component {
             .then(res => res.json())
             .then((data) => {
                 console.log(data);
-                this.props.history.push({
-                    pathname: '/admin/dashboard',
-                    state: {token: data}
-                })
+                if(data.statusCode === 200){
+                    localStorage.setItem('token',data.body)
+                    this.props.history.push({
+                        pathname: '/admin/dashboard',
+                        state: {token: data}
+                    })
+                } 
             })
             .catch(err => {
                 console.log(err);
@@ -52,25 +56,33 @@ class LogIn extends Component {
     }
 
     render(){
-        return (
-            <div>
-                <form onSubmit={this.handleSubmit}>
-                    <div>
-                        <label>
-                            Mail:
-                            <input type="text" name="mail" onChange={this.handleChange}/>
-                        </label>
-                    </div>
-                    <div>
-                        <label>
-                            Pasword:
-                            <input type="text" name="password" onChange={this.handleChange}/>
-                        </label>
-                    </div>
-                    <input type="submit" value="Log In" />
-                </form>
-            </div>
-        );
+        if (localStorage.getItem('token')){
+            return (
+                <Route exact path="/">
+                    <Redirect to="admin/dashboard"></Redirect>
+                </Route>
+              );
+        } else {
+            return (
+                <div>
+                    <form onSubmit={this.handleSubmit}>
+                        <div>
+                            <label>
+                                Mail:
+                                <input type="text" name="mail" onChange={this.handleChange}/>
+                            </label>
+                        </div>
+                        <div>
+                            <label>
+                                Pasword:
+                                <input type="text" name="password" onChange={this.handleChange}/>
+                            </label>
+                        </div>
+                        <input type="submit" value="Log In" />
+                    </form>
+                </div>
+            );
+        }
     }
 }
 
