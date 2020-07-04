@@ -51,11 +51,14 @@ class Videos extends React.Component {
     //   .then(json => console.log(json))
     //   .catch(error => console.log('Authorization failed : ' + error.message));
 
-
+    let req = { 
+      token = localStorage.getItem('token')
+    };
     fetch(API + DEFAULT_QUERY, {
       mode: 'cors',
       method: 'GET',
-      headers: headers
+      headers: headers,
+      body: JSON.stringify(req)
     })
       .then(res => res.json())
       .then(
