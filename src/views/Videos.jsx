@@ -39,6 +39,7 @@ class Videos extends React.Component {
 
     headers.append('Content-Type', 'application/json');
     headers.append('Accept', 'application/json');
+    headers.append('token',localStorage.getItem('token'))
     // headers.append('Authorization', 'Basic');
     // headers.append('Origin','http://localhost:3000');
 
@@ -51,14 +52,11 @@ class Videos extends React.Component {
     //   .then(json => console.log(json))
     //   .catch(error => console.log('Authorization failed : ' + error.message));
 
-    let req = { 
-      token: localStorage.getItem('token')
-    };
+    console.log(localStorage.getItem('token'))
     fetch(API + DEFAULT_QUERY, {
       mode: 'cors',
       method: 'GET',
       headers: headers,
-      body: JSON.stringify(req)
     })
       .then(res => res.json())
       .then(
