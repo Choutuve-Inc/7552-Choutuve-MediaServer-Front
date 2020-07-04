@@ -18,6 +18,8 @@ import {
   dashboardNASDAQChart
 } from "variables/charts.jsx";
 
+import { Route, Redirect } from "react-router";
+
 const API = 'https://choutuve-app-server.herokuapp.com/';
 const DEFAULT_QUERY = 'videos';
 
@@ -92,6 +94,13 @@ class Videos extends React.Component {
   }
 
   render() {
+    if (localStorage.getItem('token') == null){
+      return (
+        <Route exact path="/">
+
+        </Route>
+      );
+    }
     const { items } = this.state;
     console.log(items[0])
     return (

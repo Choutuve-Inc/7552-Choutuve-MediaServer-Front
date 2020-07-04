@@ -1,5 +1,7 @@
-import Dashboard from "views/Dashboard.jsx"
-import Videos from "views/Videos.jsx"
+import Dashboard from "views/Dashboard.jsx";
+import Videos from "views/Videos.jsx";
+import LogIn from "components/LogIn/LogIn";
+
 
 var routes = [
   {
@@ -15,6 +17,12 @@ var routes = [
     icon: "nc-icon nc-camera-compact",
     component: Videos,
     layout: "/admin"
+  },
+  {
+    path: "/login",
+    name: "Login",
+    icon: "nc-icon nc-chart-pie-36",
+    component: LogIn,
   },
 ];
 export default routes;
