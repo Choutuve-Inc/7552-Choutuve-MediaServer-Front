@@ -81,9 +81,13 @@ class Videos extends React.Component {
     };
 
     fetch(API + DEFAULT_QUERY + "/" + itemId, requestOptions).then((response) => {
+      if (response.status == 200) {
+        this.componentDidMount()
+      }
       return response.json();
+      
     }).then((result) => {
-      // do what you want with the response here
+      // Something
     });
   }
 
@@ -101,7 +105,7 @@ class Videos extends React.Component {
               // <li key={item.objectID}>
               //   <a href={item.url}>{item.title}</a>
               // </li>
-              <Col lg="12" md="12" sm="12">
+              <Col lg="12" md="12" sm="12" key={item.objectID}>
                 <Card className="card-stats">
                   <CardBody>
                     <Row>
@@ -134,7 +138,7 @@ class Videos extends React.Component {
                     <hr />
                     <div className="stats">
                       {console.log('id a borrar', item.id)}
-                      <button class="btn btn-danger" onClick={() => { this.handleClick(item.id) }}>
+                      <button className="btn btn-danger" onClick={() => { this.handleClick(item.id) }}>
                         <i className="fas fa-trash"></i>
                         Delete
                       </button>
