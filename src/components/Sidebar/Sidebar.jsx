@@ -1,7 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { Nav } from "reactstrap";
-// javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
 
 import logo from "logoct.png";
@@ -11,13 +10,9 @@ var ps;
 class Sidebar extends React.Component {
   constructor(props) {
     super(props);
-    this.activeRoute.bind(this);
     this.sidebar = React.createRef();
   }
-  // verifies if routeName is the one active (in browser input)
-  activeRoute(routeName) {
-    return this.props.location.pathname.indexOf(routeName) > -1 ? "active" : "";
-  }
+
   componentDidMount() {
     if (navigator.platform.indexOf("Win") > -1) {
       ps = new PerfectScrollbar(this.sidebar.current, {
@@ -26,11 +21,13 @@ class Sidebar extends React.Component {
       });
     }
   }
+
   componentWillUnmount() {
     if (navigator.platform.indexOf("Win") > -1) {
       ps.destroy();
     }
   }
+
   render() {
     return (
       <div
@@ -59,10 +56,7 @@ class Sidebar extends React.Component {
             {this.props.routes.map((prop, key) => {
               return (
                 <li
-                  className={
-                    this.activeRoute(prop.path) +
-                    (prop.pro ? " active-pro" : "")
-                  }
+                  className="active"
                   key={key}
                 >
                   <NavLink
