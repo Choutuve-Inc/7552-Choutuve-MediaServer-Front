@@ -44,7 +44,7 @@ class LogIn extends Component {
                 if(data.statusCode === 200){
                     localStorage.setItem('token',data.body)
                     this.props.history.push({
-                        pathname: '/admin',
+                        pathname: '/admin/dashboard',
                         state: {token: data}
                     })
                 } 
@@ -58,13 +58,11 @@ class LogIn extends Component {
     render(){
         if (localStorage.getItem('token')){
             return (
-                <Route exact path="/">
-                    <Redirect to="admin/dashboard"></Redirect>
-                </Route>
+                <Redirect to="admin/dashboard"></Redirect>
               );
         } else {
             return (
-                <div>
+                <div className="content">
                     <form onSubmit={this.handleSubmit}>
                         <div>
                             <label>

@@ -21,7 +21,7 @@ import {
 import { Route, Redirect } from "react-router";
 
 const API = 'https://choutuve-app-server.herokuapp.com/';
-const DEFAULT_QUERY = 'videos';
+const DEFAULT_QUERY = 'feed';
 
 class Dashboard extends React.Component {
 
@@ -59,7 +59,7 @@ class Dashboard extends React.Component {
             isLoaded: true,
             error
           });
-          console.log("API Error: ", error)
+          //console.log("API Error: ", error)
 
         }
       )
@@ -67,11 +67,9 @@ class Dashboard extends React.Component {
 
 
   render() {
-    if (localStorage.getItem('token') == null){
+    if (localStorage.getItem('token') === null){
       return (
-        <Route exact path="/">
-
-        </Route>
+        <Redirect to="login"></Redirect>
       );
     }
     const { items } = this.state;

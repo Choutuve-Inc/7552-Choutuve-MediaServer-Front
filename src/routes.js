@@ -23,6 +23,7 @@ var routes = [
     name: "Login",
     icon: "nc-icon nc-chart-pie-36",
     component: LogIn,
+    layout: "/admin"
   },
 ];
 export default routes;

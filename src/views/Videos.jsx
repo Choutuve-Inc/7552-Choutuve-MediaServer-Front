@@ -21,7 +21,8 @@ import {
 import { Route, Redirect } from "react-router";
 
 const API = 'https://choutuve-app-server.herokuapp.com/';
-const DEFAULT_QUERY = 'videos';
+const DEFAULT_QUERY = 'feed';
+const DELETE_QUERY = 'video'
 
 class Videos extends React.Component {
 
@@ -55,7 +56,7 @@ class Videos extends React.Component {
     console.log(localStorage.getItem('token'))
     fetch(API + DEFAULT_QUERY, {
       mode: 'cors',
-      method: 'GET',
+      method: 'POST',
       headers: headers,
     })
       .then(res => res.json())
@@ -83,7 +84,7 @@ class Videos extends React.Component {
       method: 'DELETE'
     };
 
-    fetch(API + DEFAULT_QUERY + "/" + itemId, requestOptions).then((response) => {
+    fetch(API + DELETE_QUERY + "/" + itemId, requestOptions).then((response) => {
       if (response.status == 200) {
         this.componentDidMount()
       }
@@ -95,11 +96,9 @@ class Videos extends React.Component {
   }
 
   render() {
-    if (localStorage.getItem('token') == null){
+    if (localStorage.getItem('token') === null){
       return (
-        <Route exact path="/">
-
-        </Route>
+        <Redirect to="login"></Redirect>
       );
     }
     const { items } = this.state;

@@ -54,19 +54,21 @@ class Sidebar extends React.Component {
         <div className="sidebar-wrapper" ref={this.sidebar}>
           <Nav>
             {this.props.routes.map((prop, key) => {
-              return (
-                <li
-                  className="active"
-                  key={key}
-                >
-                  <NavLink
-                    to={prop.layout + prop.path}
+              if (prop.name != 'Login'){
+                return (
+                  <li
+                    className="active"
+                    key={key}
                   >
-                    <i className={prop.icon} />
-                    <p>{prop.name}</p>
-                  </NavLink>
-                </li>
-              );
+                    <NavLink
+                      to={prop.layout + prop.path}
+                    >
+                      <i className={prop.icon} />
+                      <p>{prop.name}</p>
+                    </NavLink>
+                  </li>
+                );
+              }
             })}
           </Nav>
         </div>
