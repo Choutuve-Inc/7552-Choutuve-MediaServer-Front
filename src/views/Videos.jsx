@@ -22,7 +22,7 @@ import { Route, Redirect } from "react-router";
 
 const API = 'https://choutuve-app-server.herokuapp.com/';
 const DEFAULT_QUERY = 'feed';
-const DELETE_QUERY = 'video'
+const DELETE_QUERY = 'videos'
 
 class Videos extends React.Component {
 

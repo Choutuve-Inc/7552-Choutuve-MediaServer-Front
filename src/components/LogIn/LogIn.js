@@ -38,11 +38,16 @@ class LogIn extends Component {
             body: JSON.stringify(req)
         };
         fetch('https://choutuve-app-server.herokuapp.com/login', requestOptions)
-            .then(res => res.json())
+            .then(res => {
+                if (res.status === 200){
+                    return res.text();
+                } else {
+                    return null;
+                }
+            })
             .then((data) => {
-                console.log(data);
-                if(data.statusCode === 200){
-                    localStorage.setItem('token',data.body)
+                if(data){
+                    localStorage.setItem('token',data)
                     this.props.history.push({
                         pathname: '/admin/dashboard',
                         state: {token: data}
@@ -50,7 +55,7 @@ class LogIn extends Component {
                 } 
             })
             .catch(err => {
-                console.log(err);
+                console.log(err)
             })
         
     }
