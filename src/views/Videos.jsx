@@ -20,8 +20,8 @@ import {
 
 import { Route, Redirect } from "react-router";
 
-const API = 'https://choutuve-app-server.herokuapp.com/';
-const DEFAULT_QUERY = 'feed';
+const API = 'https://arcane-thicket-79100.herokuapp.com/';
+const DEFAULT_QUERY = 'videos';
 const DELETE_QUERY = 'videos'
 
 class Videos extends React.Component {
@@ -53,10 +53,9 @@ class Videos extends React.Component {
     //   .then(json => console.log(json))
     //   .catch(error => console.log('Authorization failed : ' + error.message));
 
-    console.log(localStorage.getItem('token'))
     fetch(API + DEFAULT_QUERY, {
       mode: 'cors',
-      method: 'POST',
+      method: 'GET',
       headers: headers,
     })
       .then(res => res.json())
@@ -88,7 +87,7 @@ class Videos extends React.Component {
       if (response.status == 200) {
         this.componentDidMount()
       }
-      return response.json();
+      return response;
       
     }).then((result) => {
       // Something
