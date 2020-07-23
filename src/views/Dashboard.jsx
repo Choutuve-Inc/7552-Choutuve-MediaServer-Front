@@ -27,6 +27,7 @@ const MEDIA_SERVER = 'https://arcane-thicket-79100.herokuapp.com/';
 const POPULAR_VIDEOS = '/metrics/videos/likes';
 const HATED_VIDEO = '/metrics/videos/dislikes';
 const ACTIVE_USERS = '/metrics/users/activity';
+const VIDEOS_PER_DAY = '/metrics/videos/day';
 
 class Dashboard extends React.Component {
 
@@ -38,21 +39,52 @@ class Dashboard extends React.Component {
       items: [],
       videosMasPopulares:[],
       videosMostDislike:[],
-      userActivity:[]
+      userActivity:[],
+      videosPerDay:[]
     };
     this.getVideosMasPopulares = this.getVideosMasPopulares.bind(this);
     this.getVideosDisliked = this.getVideosDisliked.bind(this);
     this.getActiveUsers = this.getActiveUsers.bind(this);
+    this.getVideosPerDay = this.getVideosPerDay.bind(this);
   }
 
   componentWillMount(){
     this.getVideosMasPopulares();
     this.getVideosDisliked();
     this.getActiveUsers();
+    this.getVideosPerDay();
   }
 
   componentDidMount() {
     
+  }
+
+  getVideosPerDay(){
+    let headers = new Headers();
+
+    headers.append('Content-Type', 'application/json');
+    headers.append('Accept', 'application/json');
+
+    fetch(MEDIA_SERVER + VIDEOS_PER_DAY, {
+      mode: 'cors',
+      method: 'GET',
+      headers: headers
+    })
+      .then(res => res.json())
+      .then(
+        (result) => {
+          this.setState({
+            videosPerDay: result
+          });
+        },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error
+          });
+          //console.log("API Error: ", error)
+        }
+      )
   }
 
   getActiveUsers(){
@@ -69,12 +101,8 @@ class Dashboard extends React.Component {
       .then(res => res.json())
       .then(
         (result) => {
-          let res = [];
-          for (let item of result){
-            res.push({UserName:item[0], activity:item[1]})
-          }
           this.setState({
-            userActivity: res
+            userActivity: result
           });
         },
         (error) => {
@@ -101,12 +129,8 @@ class Dashboard extends React.Component {
       .then(res => res.json())
       .then(
         (result) => {
-          let res = [];
-          for (let item of result){
-            res.push({name:item[0], likes:item[1]})
-          }
           this.setState({
-            videosMasPopulares: res
+            videosMasPopulares: result
           });
         },
         (error) => {
@@ -133,12 +157,8 @@ class Dashboard extends React.Component {
       .then(res => res.json())
       .then(
         (result) => {
-          let res = [];
-          for (let item of result){
-            res.push({name:item[0], dislikes:item[1]})
-          }
           this.setState({
-            videosMostDislike: res
+            videosMostDislike: result
           });
         },
         (error) => {
@@ -166,169 +186,6 @@ class Dashboard extends React.Component {
       <>
         <div className="content">
           <Row>
-            <Col lg="3" md="6" sm="6">
-              <Card className="card-stats">
-                <CardBody>
-                  <Row>
-                    <Col md="4" xs="5">
-                      <div className="icon-big text-center icon-warning">
-                        <i className="nc-icon nc-spaceship text-warning" />
-                      </div>
-                    </Col>
-                    <Col md="8" xs="7">
-                      <div className="numbers">
-                        <p className="card-category">Total videos</p>
-                        <CardTitle tag="p">1452</CardTitle>
-                        <p />
-                      </div>
-                    </Col>
-                  </Row>
-                </CardBody>
-                <CardFooter>
-                  <hr />
-                  <div className="stats">
-                    <i className="fas fa-sync-alt" /> Today
-                  </div>
-                </CardFooter>
-              </Card>
-            </Col>
-
-            <Col lg="3" md="6" sm="6">
-              <Card className="card-stats">
-                <CardBody>
-                  <Row>
-                    <Col md="4" xs="5">
-                      <div className="icon-big text-center icon-warning">
-                        <i className="nc-icon nc-spaceship text-warning" />
-                      </div>
-                    </Col>
-                    <Col md="8" xs="7">
-                      <div className="numbers">
-                        <p className="card-category">Total videos</p>
-                        <CardTitle tag="p">1452</CardTitle>
-                        <p />
-                      </div>
-                    </Col>
-                  </Row>
-                </CardBody>
-                <CardFooter>
-                  <hr />
-                  <div className="stats">
-                    <i className="fas fa-sync-alt" /> Today
-                  </div>
-                </CardFooter>
-              </Card>
-            </Col>
-
-            <Col lg="3" md="6" sm="6">
-              <Card className="card-stats">
-                <CardBody>
-                  <Row>
-                    <Col md="4" xs="5">
-                      <div className="icon-big text-center icon-warning">
-                        <i className="nc-icon nc-spaceship text-warning" />
-                      </div>
-                    </Col>
-                    <Col md="8" xs="7">
-                      <div className="numbers">
-                        <p className="card-category">Total videos</p>
-                        <CardTitle tag="p">1452</CardTitle>
-                        <p />
-                      </div>
-                    </Col>
-                  </Row>
-                </CardBody>
-                <CardFooter>
-                  <hr />
-                  <div className="stats">
-                    <i className="fas fa-sync-alt" /> Today
-                  </div>
-                </CardFooter>
-              </Card>
-            </Col>
-
-            <Col lg="3" md="6" sm="6">
-              <Card className="card-stats">
-                <CardBody>
-                  <Row>
-                    <Col md="4" xs="5">
-                      <div className="icon-big text-center icon-warning">
-                        <i className="nc-icon nc-spaceship text-warning" />
-                      </div>
-                    </Col>
-                    <Col md="8" xs="7">
-                      <div className="numbers">
-                        <p className="card-category">Total videos</p>
-                        <CardTitle tag="p">1452</CardTitle>
-                        <p />
-                      </div>
-                    </Col>
-                  </Row>
-                </CardBody>
-                <CardFooter>
-                  <hr />
-                  <div className="stats">
-                    <i className="fas fa-sync-alt" /> Today
-                  </div>
-                </CardFooter>
-              </Card>
-            </Col>
-          </Row>
-          <Row>
-            <Col md="4">
-              <Card>
-                <CardHeader>
-                  <CardTitle tag="h5">Users Statistics</CardTitle>
-                  <p className="card-category">User DB</p>
-                </CardHeader>
-                <CardBody>
-                  <Pie
-                    data={dashboardEmailStatisticsChart.data}
-                    options={dashboardEmailStatisticsChart.options}
-                  />
-                </CardBody>
-                <CardFooter>
-                  <div className="legend">
-                    <i className="fa fa-circle text-primary" /> Activos{" "}
-                    <i className="fa fa-circle text-warning" /> Sin videos{" "}
-                    <i className="fa fa-circle text-danger" /> Eliminados{" "}
-                    {/* <i className="fa fa-circle text-gray" /> Unopened */}
-                  </div>
-                  <hr />
-                  <div className="stats">
-                    <i className="fa fa-calendar" /> Number of users
-                  </div>
-                </CardFooter>
-              </Card>
-            </Col>
-            <Col md="8">
-              <Card className="card-chart">
-                <CardHeader>
-                  <CardTitle tag="h5">Videos/Comentarios por dia</CardTitle>
-                  <p className="card-category">Videos/comentarios cargados a la aplicacion</p>
-                </CardHeader>
-                <CardBody>
-                  <Line
-                    data={dashboardNASDAQChart.data}
-                    options={dashboardNASDAQChart.options}
-                    width={400}
-                    height={100}
-                  />
-                </CardBody>
-                <CardFooter>
-                  <div className="chart-legend">
-                    <i className="fa fa-circle text-info" /> Videos{" "}
-                    <i className="fa fa-circle text-warning" /> Comentarios
-                  </div>
-                  <hr />
-                  <div className="card-stats">
-                    <i className="fa fa-check" /> Choutuve info
-                  </div>
-                </CardFooter>
-              </Card>
-            </Col>
-          </Row>
-          <Row>
             <Col>
               {
                 (data.length>0) ?
@@ -338,7 +195,7 @@ class Dashboard extends React.Component {
                 </CardHeader>
                 <CardBody>
                   <VictoryChart domainPadding={20} theme={VictoryTheme.material}>
-                    <VictoryBar data={data} x="name" y="likes"></VictoryBar>
+                    <VictoryBar data={data} x="title" y="likes"></VictoryBar>
                   </VictoryChart>
                 </CardBody>
               </Card>: null
@@ -355,7 +212,7 @@ class Dashboard extends React.Component {
                 </CardHeader>
                 <CardBody>
                   <VictoryChart domainPadding={20} theme={VictoryTheme.material}>
-                    <VictoryBar data={this.state.videosMostDislike.length} x="name" y="dislikes"></VictoryBar>
+                    <VictoryBar data={this.state.videosMostDislike} x="title" y="dislikes"></VictoryBar>
                   </VictoryChart>
                 </CardBody>
               </Card>: null
@@ -372,7 +229,24 @@ class Dashboard extends React.Component {
                 </CardHeader>
                 <CardBody>
                   <VictoryChart domainPadding={20} theme={VictoryTheme.material}>
-                    <VictoryBar data={this.state.userActivity} x="UserName" y="activity"></VictoryBar>
+                    <VictoryBar data={this.state.userActivity} x="user" y="activity"></VictoryBar>
+                  </VictoryChart>
+                </CardBody>
+              </Card>: null
+              }
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              {
+                (this.state.videosPerDay.length>0) ?
+                <Card>
+                <CardHeader>
+                  <CardTitle tag="h5">Videos Mas pupulares</CardTitle>
+                </CardHeader>
+                <CardBody>
+                  <VictoryChart domainPadding={20} theme={VictoryTheme.material}>
+                    <VictoryBar data={this.state.videosPerDay} x="date" y="cant"></VictoryBar>
                   </VictoryChart>
                 </CardBody>
               </Card>: null

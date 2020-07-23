@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import { Route, Redirect } from "react-router";
+import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 
 class LogIn extends Component {
     constructor(props){
         super(props);
         this.state = {
-            mail : '',
+            email : '',
             password : '',
             tipo: 'mailPass',
         };
@@ -18,15 +19,13 @@ class LogIn extends Component {
         this.setState({
             [name]: value
         });
-        
     }
     
 
     handleSubmit(event){
-        event.preventDefault();
         let req = { 
             tipo: 'admin',
-            email: this.state.mail,
+            email: this.state.email,
             password: this.state.password
         };
         
@@ -47,6 +46,7 @@ class LogIn extends Component {
             })
             .then((data) => {
                 if(data){
+                    console.log("login")
                     localStorage.setItem('token',data)
                     this.props.history.push({
                         pathname: '/admin/dashboard',
@@ -68,21 +68,17 @@ class LogIn extends Component {
         } else {
             return (
                 <div className="content">
-                    <form onSubmit={this.handleSubmit}>
-                        <div>
-                            <label>
-                                Mail:
-                                <input type="text" name="mail" onChange={this.handleChange}/>
-                            </label>
-                        </div>
-                        <div>
-                            <label>
-                                Pasword:
-                                <input type="text" name="password" onChange={this.handleChange}/>
-                            </label>
-                        </div>
-                        <input type="submit" value="Log In" />
-                    </form>
+                    <Form>
+                        <FormGroup>
+                            <Label for="exampleEmail">Email</Label>
+                            <Input type="email" name="email" placeholder="Email" onChange={this.handleChange}/>
+                        </FormGroup>
+                        <FormGroup>
+                            <Label for="examplePassword">Password</Label>
+                            <Input type="password" name="password" id="examplePassword" placeholder="password" onChange={this.handleChange}/>
+                        </FormGroup>
+                        <Button onClick={()=>this.handleSubmit()}>Submit</Button>
+                    </Form>
                 </div>
             );
         }
@@ -90,3 +86,25 @@ class LogIn extends Component {
 }
 
 export default LogIn;
+
+/*
+
+<form onSubmit={this.handleSubmit}>
+                        <Card>
+                            <CardTitle>
+                                Mail:
+                            </CardTitle>
+                            <CardBody>
+                                <input type="text" name="mail" onChange={this.handleChange}/>
+                            </CardBody>
+                            <CardTitle>
+                                Pasword:
+                            </CardTitle>
+                            <CardBody>
+                                <input type="text" name="password" onChange={this.handleChange}/>
+                            </CardBody>
+                            <input type="submit" value="Log In" />
+                        </Card>
+                    </form>
+
+*/
