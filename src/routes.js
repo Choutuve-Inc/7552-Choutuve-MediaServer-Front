@@ -1,6 +1,7 @@
 import Dashboard from "views/Dashboard.jsx";
 import Videos from "views/Videos.jsx";
 import LogIn from "components/LogIn/LogIn";
+import Users from "views/Users.jsx";
 
 
 var routes = [
@@ -25,5 +26,12 @@ var routes = [
     component: LogIn,
     layout: "/admin"
   },
+  {
+    path: '/users',
+    name: 'Users',
+    icon: "nc-icon nc-chart-pie-36",
+    component: Users,
+    layout: "/admin"
+  }
 ];
 export default routes;
