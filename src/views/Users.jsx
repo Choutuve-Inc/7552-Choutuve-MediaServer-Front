@@ -60,7 +60,7 @@ class Users extends React.Component {
   
     handleClick = itemId => {
       console.log("se borra el item: ", itemId)
-      /*const requestOptions = {
+      const requestOptions = {
         method: 'DELETE'
       };
   
@@ -71,7 +71,7 @@ class Users extends React.Component {
         return response;
         
       }).then((result) => {
-      });*/
+      });
     }
   
     render() {
