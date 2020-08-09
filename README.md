@@ -11,3 +11,6 @@ https://choutuve-media-server-front.herokuapp.com/
 npm install
 npm start
 ```
+
+## Detalles
+Para los graficos se uso la libreria victory.
